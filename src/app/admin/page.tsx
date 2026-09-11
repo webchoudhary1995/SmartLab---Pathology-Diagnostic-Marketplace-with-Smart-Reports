@@ -39,6 +39,9 @@ export default function AdminDashboard() {
               <Link href="/admin/tests" className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-smooth text-sm font-medium">
                 Tests
               </Link>
+              <Link href="/admin/blog" className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-smooth text-sm font-medium">
+                Blog
+              </Link>
               <Link href="/admin/coupons" className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-smooth text-sm font-medium">
                 Coupons
               </Link>

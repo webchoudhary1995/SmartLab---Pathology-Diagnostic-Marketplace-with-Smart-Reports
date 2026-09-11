@@ -81,6 +81,7 @@ export default function Header() {
             {[
               { href: '/', label: 'Home' },
               { href: '/packages', label: 'Packages' },
+              { href: '/blog', label: 'Blog' },
               { href: '/labs', label: 'Find Labs' },
               { href: '/upload-prescription', label: 'Upload Rx' },
               { href: '/track-order', label: 'Track Order' },
@@ -233,6 +234,7 @@ export default function Header() {
                 {[
                   { href: '/', label: 'Home', icon: '🏠' },
                   { href: '/packages', label: 'Packages', icon: '📦' },
+                  { href: '/blog', label: 'Blog', icon: '📝' },
                   { href: '/labs', label: 'Find Labs', icon: '🔬' },
                   { href: '/upload-prescription', label: 'Upload Prescription', icon: '📄' },
                   { href: '/track-order', label: 'Track Order', icon: '📍' },
