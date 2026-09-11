@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import AdminHeader from "@/components/admin/AdminHeader";
+import LabPartnerHeader from "@/components/labpartner/LabPartnerHeader";
 
 export const metadata: Metadata = {
-  title: "SmartLab Admin Portal",
-  description: "SmartLab Master Administration",
+  title: "SmartLab Lab Partner Portal",
+  description: "SmartLab Franchise Partner Dashboard",
 };
 
-export default function AdminLayout({
+export default function LabPartnerLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export default function AdminLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-slate-50">
-        <AdminHeader />
+        <LabPartnerHeader />
         <main className="flex-1 pt-0">
           {children}
         </main>
