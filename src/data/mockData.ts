@@ -284,6 +284,26 @@ export const orders: Order[] = [
       pincode: '302022'
     },
     slot: { date: '2025-09-08', timeSlot: '6:00 AM - 7:00 AM' },
+    status: 'boy-assigned',
+    phlebotomist: phlebotomists[0],
+    createdAt: '2025-09-06T11:00:00Z',
+    totalAmount: 2499
+  },
+  {
+    id: 'ORD-006',
+    packageId: 'full-body-1',
+    packageName: 'Complete Health Checkup',
+    patientName: 'Mohit Singh',
+    age: 29,
+    gender: 'male',
+    address: {
+      fullName: 'Mohit Singh',
+      phone: '+91 98765 12349',
+      addressLine1: '56, Sitapura',
+      city: 'Jaipur',
+      pincode: '302022'
+    },
+    slot: { date: '2025-09-08', timeSlot: '6:00 AM - 7:00 AM' },
     status: 'testing',
     phlebotomist: phlebotomists[1],
     barcode: 'SL-20250908-003',
