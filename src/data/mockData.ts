@@ -222,7 +222,7 @@ export const orders: Order[] = [
       pincode: '302017'
     },
     slot: { date: '2025-09-11', timeSlot: '7:00 AM - 8:00 AM' },
-    status: 'boy-assigned',
+    status: 'collected',
     phlebotomist: phlebotomists[0],
     createdAt: '2025-09-09T14:20:00Z',
     totalAmount: 999
@@ -284,7 +284,7 @@ export const orders: Order[] = [
       pincode: '302022'
     },
     slot: { date: '2025-09-08', timeSlot: '6:00 AM - 7:00 AM' },
-    status: 'completed',
+    status: 'testing',
     phlebotomist: phlebotomists[1],
     barcode: 'SL-20250908-003',
     createdAt: '2025-09-06T11:00:00Z',
