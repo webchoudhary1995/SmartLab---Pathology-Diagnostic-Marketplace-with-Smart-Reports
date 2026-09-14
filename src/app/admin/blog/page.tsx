@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Plus, Search, FileText, Trash2, Edit, Eye, Calendar } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Search, FileText, Trash2, Edit, Eye, Calendar, X, Upload } from 'lucide-react';
 
 const mockBlogs = [
   { id: '1', title: 'Understanding Blood Test Results: A Complete Guide', category: 'Health Tips', author: 'Dr. Sharma', date: '2026-01-10', status: 'published', image: '/file.svg' },
@@ -12,9 +12,26 @@ const mockBlogs = [
 
 export default function AdminBlogPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [blogs] = useState(mockBlogs);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [blogs, setBlogs] = useState(mockBlogs);
+  const [newBlog, setNewBlog] = useState({ title: '', category: '', author: '', content: '' });
 
   const filteredBlogs = blogs.filter(b => b.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const handleAddBlog = () => {
+    if (newBlog.title && newBlog.category && newBlog.author) {
+      const blog = {
+        id: Date.now().toString(),
+        ...newBlog,
+        date: new Date().toISOString().split('T')[0],
+        status: 'draft',
+        image: '/file.svg'
+      };
+      setBlogs([blog, ...blogs]);
+      setShowAddForm(false);
+      setNewBlog({ title: '', category: '', author: '', content: '' });
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -23,6 +40,7 @@ export default function AdminBlogPage() {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          onClick={() => setShowAddForm(true)}
           className="px-4 py-2 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transition-smooth flex items-center gap-2 text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
@@ -92,6 +110,107 @@ export default function AdminBlogPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Add Blog Modal */}
+      <AnimatePresence>
+        {showAddForm && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowAddForm(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 border-b border-slate-200 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-slate-900">Add New Blog</h2>
+                <button onClick={() => setShowAddForm(false)} className="p-2 hover:bg-slate-100 rounded-lg">
+                  <X className="w-5 h-5 text-slate-500" />
+                </button>
+              </div>
+              <div className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Blog Title</label>
+                  <input
+                    type="text"
+                    value={newBlog.title}
+                    onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+                    placeholder="Enter blog title"
+                  />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Category</label>
+                    <select
+                      value={newBlog.category}
+                      onChange={(e) => setNewBlog({ ...newBlog, category: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Health Tips">Health Tips</option>
+                      <option value="Preventive Care">Preventive Care</option>
+                      <option value="Diabetes Care">Diabetes Care</option>
+                      <option value="Heart Health">Heart Health</option>
+                      <option value="Nutrition">Nutrition</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Author</label>
+                    <input
+                      type="text"
+                      value={newBlog.author}
+                      onChange={(e) => setNewBlog({ ...newBlog, author: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+                      placeholder="Author name"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Content</label>
+                  <textarea
+                    value={newBlog.content}
+                    onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
+                    rows={6}
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 resize-none"
+                    placeholder="Write your blog content..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Featured Image</label>
+                  <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:border-cyan-400 transition-colors cursor-pointer">
+                    <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <p className="text-sm text-slate-500">Click to upload or drag and drop</p>
+                    <p className="text-xs text-slate-400">PNG, JPG up to 5MB</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-smooth"
+                >
+                  Cancel
+                </button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleAddBlog}
+                  className="px-6 py-2 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transition-smooth font-medium"
+                >
+                  Publish Blog
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
